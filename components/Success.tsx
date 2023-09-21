@@ -15,7 +15,7 @@ const Success = ({setResetPassword, setuser}: Props) => {
     }
   return (
     <div className='flex items-center justify-center w-full h-[90%]'>
-        <div className='bg-white shadow-md p-2 rounded-2xl text-black px-3 laptop:px-5 w-[95%] laptop:w-[50%] mx-auto'>
+        <div className='bg-white shadow-md p-2 rounded-2xl text-black px-3 md:px-5 w-[95%] md:w-[50%] mx-auto'>
             <div className='flex items-center justify-between border-b border-gray-200 pb-2'>
                 <div className='flex items-center gap-1 text-[10px] cursor-pointer' onClick={()=> {
                     setResetPassword(false)
@@ -31,7 +31,7 @@ const Success = ({setResetPassword, setuser}: Props) => {
                 <p className="text-[10px] text-[#ABABAB]">Password reset successful, please proceed to log in</p>
             </div>
 
-            <div className='w-[85%] laptop:w-[60%] mx-auto pb-10 pt-5'>
+            <div className='w-[85%] md:w-[60%] mx-auto pb-10 pt-5'>
                 <button type='button' className='w-full mt-5 rounded-xl bg-[#4A36EC] py-3 text-white text-xs' onClick={handleClick}>Log In</button>
 
             </div>

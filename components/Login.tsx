@@ -24,7 +24,7 @@ const Login = ({ setuser, setPasswordToggle }: Props) => {
                 <p className="text-[10px] text-[#ABABAB]">Please enter your log in details</p>
             </div>
 
-            <div className='w-[90%] laptop:w-[60%] mx-auto pb-10 pt-5'>
+            <div className='w-[90%] md:w-[60%] mx-auto pb-10 pt-5'>
                 <p className='text-[10px] font-bold'>Email Address</p>
                 <div className='w-full border border-gray-500 rounded-md p-2'>
                     <input type='text'  placeholder='Enter Your Email Address' className='w-full outline-none border-none bg-transparent text-xs' />
