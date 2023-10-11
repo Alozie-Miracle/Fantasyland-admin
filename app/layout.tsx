@@ -1,8 +1,8 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Poppins } from "next/font/google";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Poppins({ weight: "600", preload: false });
 
 export const metadata: Metadata = {
   title: 'FANTASY ISLAND ADMIN',

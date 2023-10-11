@@ -12,6 +12,10 @@ type Props = {
 
 const Login = ({ setuser, setPasswordToggle }: Props) => {
     const [toggle, settoggle] = useState(false)
+
+    const handleClick = () => {
+        window.location.assign('/chat')
+    }
   return (
     <div className='flex items-center justify-center w-full h-[90%]'>
         <div className='bg-white shadow-md p-2 rounded-2xl text-black px-5 w-[90%] md:w-[50%] mx-auto'>
@@ -45,7 +49,7 @@ const Login = ({ setuser, setPasswordToggle }: Props) => {
                     setPasswordToggle(true)
                     }}>Forgot Passwords?</p>
 
-                <button type='button' className='w-full my-2 rounded-xl bg-[#4A36EC] py-3 text-xs text-white'>Log In</button>
+                <button type='button' className='w-full my-2 rounded-xl bg-[#4A36EC] py-3 text-xs text-white' onClick={handleClick}>Log In</button>
 
             </div>
         </div>
