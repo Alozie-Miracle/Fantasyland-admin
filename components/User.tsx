@@ -7,7 +7,7 @@ type Props = {}
 
 const User = (props: Props) => {
   return (
-    <div>
+    <div className='h-full'>
         <div className='py-2 flex flex-col gap-2'>
             <div className='flex items-center justify-between text-gray-500 '>
                 <p className='text-xs'>Unread</p>
@@ -28,7 +28,7 @@ const User = (props: Props) => {
             ))}
         </div>
         
-        <div className='py-2 flex flex-col gap-2'>
+        <div className='py-2 flex flex-col gap-2 pb-5'>
             <div className='flex items-center justify-between text-gray-500 '>
                 <p className='text-xs'>All Messages</p>
                 <ChevronDownIcon className='h-5 w-5 text-gray-500' />
@@ -47,6 +47,8 @@ const User = (props: Props) => {
                 </div>
             ))}
         </div>
+
+        
     </div>
   )
 }

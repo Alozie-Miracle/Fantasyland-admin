@@ -7,7 +7,7 @@ type Props = {}
 
 const page = (props: Props) => {
   return (
-    <div className=' h-full overflow-hidden'>
+    <div className=' h-[100vh] overflow-hidden'>
         <div className='w-full px-5 flex gap-10 items-center py-5 sticky top-0 z-50 bg-black '>
             <div className='w-[30%]'>
                 <div className='flex items-center justify-between'>
@@ -32,7 +32,7 @@ const page = (props: Props) => {
                 </div>
             </div>
         </div>
-        <div className='px-5 overflow-hidden'>
+        <div className='px-5'>
             <Messages />
         </div>
     </div>
