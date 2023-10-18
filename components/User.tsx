@@ -16,6 +16,7 @@ interface Chat {
     userId: string;
     title: string;
     read: false;
+    timestamp: Date
 }
 
 const User = ({ setId, id }: Props) => {
@@ -31,8 +32,16 @@ const User = ({ setId, id }: Props) => {
                     id: doc.id,
                     userId: doc.data().userId,
                     title: doc.data().title,
-                    read: doc.data()?.read
+                    read: doc.data()?.read,
+                    timestamp: doc.data().timestamp,
                 });
+            });
+
+            // Convert timestamps to Date objects and then sort in descending order
+            fetchedChats.sort((a, b) => {
+                const timestampA = new Date(a.timestamp).getTime();
+                const timestampB = new Date(b.timestamp).getTime();
+                return timestampA - timestampB;
             });
 
             setChatTitle(fetchedChats);
@@ -40,6 +49,8 @@ const User = ({ setId, id }: Props) => {
 
         getChat();
     }, []);
+
+
 
     const handleClick = (id: string) => {
         setId(id)

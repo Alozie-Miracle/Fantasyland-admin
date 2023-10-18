@@ -18,13 +18,14 @@ interface Message {
     id: string;
     user: string;
     message: string;
-    timeStamp: Date
+    timestamp: any
 }
 
 const Message = ({id}: Props) => {
     const [toggle, setToggle] = useState(true)
     const [input, setInput] = useState('')
     const [messages, setMessages] = useState<Message[]>([])
+    const scrollViewRef = useRef(null);
 
     const fetchMessages = async () => {
         // Fetch messages from the "messages" subcollection of the chat document
@@ -38,7 +39,7 @@ const Message = ({id}: Props) => {
                 id: doc.id,
                 user: doc.data().user,
                 message: doc.data().message,
-                timeStamp: doc.data().timeStamp,
+                timestamp: doc.data().timestamp, // Change 'timeStamp' to 'timestamp'
                 email: doc.data().email
             });
         });
@@ -47,9 +48,8 @@ const Message = ({id}: Props) => {
 
     useEffect(() => {
         fetchMessages()
-        console.log(id);
         
-    }, [id])
+    }, [id, messages])
 
 
     const sendMessage = async () => {
@@ -61,20 +61,33 @@ const Message = ({id}: Props) => {
 
             // Add a new message to the subcollection
             await addDoc(messagesRef, {
-                message: input,
-                timestamp: serverTimestamp(),
-                email: auth?.currentUser?.email,
-                user: 'admin',
-                
-            })
+            message: input,
+            timestamp: serverTimestamp(), // Change 'timeStamp' to 'timestamp'
+            email: auth?.currentUser?.email,
+            user: 'admin',
+        });
             fetchMessages();
 
             setInput("");
-
+            if (scrollViewRef.current) {
+                scrollViewRef.current.scrollTop = scrollViewRef.current.scrollHeight;
+            }
         }
+
+        
+        
+        
 
     return;
   };
+  
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+        // Handle Enter key press here, e.g., trigger a function or submit a form.
+        sendMessage(); // You can call your send message function here.
+    }
+};
+  
 
 
   return (
@@ -83,7 +96,7 @@ const Message = ({id}: Props) => {
         {
             toggle ? (
                 <div className='bg-[#262626]  rounded-lg pb-2'>
-                    <div className='h-[80vh] p-2 overflow-y-scroll scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-[#4A36EC]/80'>
+                    <div ref={scrollViewRef} className='h-[80vh] p-2 overflow-y-scroll scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-[#4A36EC]/80'>
                         <div className='flex items-center justify-center w-full'>
                             <p className='text-[10px] text-center text-gray-500 p-2 bg-[#0C0C0C]'>Sunday, August 15th 2022</p>
                         </div>
@@ -96,7 +109,7 @@ const Message = ({id}: Props) => {
                                         </div>
                                         <div className='w-[80%]'>
                                             <p className={`${chat.user === 'admin' && 'text-right'} text-[10px]`}>{chat.message}</p>
-                                            <p className={`${chat.user === 'admin' ? "justify-end" : "justify-start" } flex text-[8px]`}>{new Date(chat.timeStamp).toLocaleDateString()}</p>
+                                            <p className={`${chat.user === 'admin' ? "justify-end" : "justify-start" } flex text-[8px]`}>{new Date(chat.timestamp?.toDate()).toLocaleString()}</p>
                                         </div>
                                         <div className={`${chat.user === 'admin' && 'w-8 h-8 rounded-md bg-black flex items-center justify-center'}`}>
                                             <Image src={headset} alt='headset' className='h-4 w-4' />
@@ -107,7 +120,7 @@ const Message = ({id}: Props) => {
                         </div>
                     </div>
                     <div className='border border-gray-500 p-2 rounded-md max-w-[80%] mx-auto bg-[#262626] my-2 flex items-center gap-5'>
-                        <input type='text' value={input} onChange={e => setInput(e.target.value)} placeholder='type your message...' className='bg-transparent outline-none border-none w-full text-xs flex-1' />
+                        <input type='text' value={input} onChange={e => setInput(e.target.value)} placeholder='type your message...' className='bg-transparent outline-none border-none w-full text-xs flex-1' onKeyDown={handleKeyDown}/>
                         <div className='flex items-center gap-5'>
                             <div className='h-4 w-[1px] bg-gray-400' />
                             <PaperAirplaneIcon onClick={sendMessage} className='text-gray-400 h-5 w-5 cursor-pointer active:scale-90 transition duration-200 ease-in-out' />
