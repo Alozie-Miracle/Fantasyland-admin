@@ -69,9 +69,12 @@ const Message = ({id}: Props) => {
             fetchMessages();
 
             setInput("");
-            if (scrollViewRef.current) {
-                scrollViewRef.current.scrollTop = scrollViewRef.current.scrollHeight;
+            const container = scrollViewRef.current as HTMLElement | null; // Use assertion
+
+            if (container) {
+                container.scrollTop = container.scrollHeight;
             }
+
         }
 
         
