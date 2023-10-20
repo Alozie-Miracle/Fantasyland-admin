@@ -44,6 +44,8 @@ const User = ({ setId, id }: Props) => {
                 return timestampA - timestampB;
             });
 
+            
+
             setChatTitle(fetchedChats);
         };
 
@@ -63,7 +65,7 @@ const User = ({ setId, id }: Props) => {
                 <ChevronDownIcon className='h-5 w-5 text-gray-500' />
             </div>
             {chatTitle.map((msg) => (
-                <div className={`${id === msg.id && 'bg-gray-700 rounded-md'} flex flex-col gap-5 py-2 px-1`} onClick={() =>handleClick(msg.id)} key={msg.id}>
+                <div className={`${id === msg.id && 'bg-gray-700 rounded-md'} flex flex-col gap-5 py-2 px-1 cursor-pointer hover:bg-gray-800 hover:rounded-md transition-all duration-300 ease-in-out active:bg-gray-900 active:scale-90`} onClick={() =>handleClick(msg.id)} key={msg.id}>
                     <div className='flex items-center gap-2'>
                         <div className='w-8 h-8 rounded-full bg-[#4A36EC] flex items-center justify-center'>
                             <UserIcon className='h-4 w-4 text-white' />

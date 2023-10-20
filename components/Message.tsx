@@ -4,7 +4,7 @@ import { app, db } from '@/constant/firebase'
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline'
 import { UserIcon } from '@heroicons/react/24/solid'
 import { getAuth } from 'firebase/auth'
-import { addDoc, collection, getDocs, orderBy, query, serverTimestamp } from 'firebase/firestore'
+import { addDoc, collection, getDocs, orderBy, query, serverTimestamp, onSnapshot  } from 'firebase/firestore'
 import React, { useRef, useEffect, useState } from 'react'
 import headset from '@/assets/ri_customer-service-2-fill.png'
 import Image from 'next/image'
@@ -27,29 +27,54 @@ const Message = ({id}: Props) => {
     const [messages, setMessages] = useState<Message[]>([])
     const scrollViewRef = useRef(null);
 
-    const fetchMessages = async () => {
-        // Fetch messages from the "messages" subcollection of the chat document
-        const messagesRef = collection(db, "chats", id, "messages");
-        const messagesQuery = query(messagesRef, orderBy("timestamp", "asc"));
-        const querySnapshot = await getDocs(messagesQuery);
-        const fetchedMessages: Message[] = [];
+    // const fetchMessages = async () => {
+    //     // Fetch messages from the "messages" subcollection of the chat document
+    //     const messagesRef = collection(db, "chats", id, "messages");
+    //     const messagesQuery = query(messagesRef, orderBy("timestamp", "asc"));
+    //     const querySnapshot = await getDocs(messagesQuery);
+    //     const fetchedMessages: Message[] = [];
 
-        querySnapshot.forEach((doc) => {
-            fetchedMessages.push({
-                id: doc.id,
-                user: doc.data().user,
-                message: doc.data().message,
-                timestamp: doc.data().timestamp, // Change 'timeStamp' to 'timestamp'
-                email: doc.data().email
-            });
-        });
-        setMessages(fetchedMessages);
-    };
+    //     querySnapshot.forEach((doc) => {
+    //         fetchedMessages.push({
+    //             id: doc.id,
+    //             user: doc.data().user,
+    //             message: doc.data().message,
+    //             timestamp: doc.data().timestamp, // Change 'timeStamp' to 'timestamp'
+    //             email: doc.data().email
+    //         });
+    //     });
+    //     setMessages(fetchedMessages);
+    // };
+
+    // useEffect(() => {
+    //     fetchMessages()
+        
+    // }, [id, messages])
 
     useEffect(() => {
-        fetchMessages()
-        
-    }, [id, messages])
+    // Set up a query for the messages collection
+    if (!id) return;
+        const messagesRef = collection(db, 'chats', id, 'messages');
+        const messagesQuery = query(messagesRef, orderBy('timestamp', 'asc'));
+
+        // Set up a snapshot listener to listen for changes
+        const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
+            const fetchedMessages: Message[] = [];
+            snapshot.forEach((doc) => {
+                fetchedMessages.push({
+                    id: doc.id,
+                    user: doc.data().user,
+                    message: doc.data().message,
+                    timestamp: doc.data().timestamp,
+                    email: doc.data().email,
+                });
+            });
+            setMessages(fetchedMessages);
+        });
+
+        // This will unsubscribe from the listener when the component unmounts
+        return unsubscribe;
+    }, [id]);
 
 
     const sendMessage = async () => {
@@ -66,7 +91,7 @@ const Message = ({id}: Props) => {
             email: auth?.currentUser?.email,
             user: 'admin',
         });
-            fetchMessages();
+            // fetchMessages();
 
             setInput("");
             const container = scrollViewRef.current as HTMLElement | null; // Use assertion
@@ -101,7 +126,7 @@ const Message = ({id}: Props) => {
                 <div className='bg-[#262626]  rounded-lg pb-2'>
                     <div ref={scrollViewRef} className='h-[80vh] p-2 overflow-y-scroll scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-[#4A36EC]/80'>
                         <div className='flex items-center justify-center w-full'>
-                            <p className='text-[10px] text-center text-gray-500 p-2 bg-[#0C0C0C]'>Sunday, August 15th 2022</p>
+                            <p className='text-[10px] text-center text-gray-500 p-2 bg-[#0C0C0C]'>{new Date().toLocaleTimeString()}</p>
                         </div>
                         <div className='py-10 flex flex-col gap-5'>
                             {messages.map((chat, index) => (

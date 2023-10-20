@@ -6,12 +6,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBLO-qaCfxDjfumyvJOHICbH54tuPT76DQ",
-  authDomain: "fantasyisland-db229.firebaseapp.com",
-  projectId: "fantasyisland-db229",
-  storageBucket: "fantasyisland-db229.appspot.com",
-  messagingSenderId: "402791206925",
-  appId: "1:402791206925:web:605aa0a7bfb4e1a5e78544"
+  apiKey: "AIzaSyAvyvDipjg4lI0qYL6kXqdT-x9WEAQHd-Q",
+  authDomain: "fantasyisland-55d4d.firebaseapp.com",
+  projectId: "fantasyisland-55d4d",
+  storageBucket: "fantasyisland-55d4d.appspot.com",
+  messagingSenderId: "921922939007",
+  appId: "1:921922939007:web:0016bb611ffa42a8b4f74a"
 };
 
 // Initialize Firebase

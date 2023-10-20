@@ -53,7 +53,7 @@ const Login = ({ setuser, setPasswordToggle }: Props) => {
         });
   };
 //   const handleSubmit = () => {
-//     const auth = getAuth();
+//     const auth = getAuth(app);
 //         createUserWithEmailAndPassword(auth, email, password)
 //         .then((userCredential) => {
 //             console.log(userCredential.user);
