@@ -49,6 +49,8 @@ const Login = ({ setuser, setPasswordToggle }: Props) => {
         })
         .catch((error) => {
             console.log(error.message);
+            console.log(error);
+            
             
         });
   };
