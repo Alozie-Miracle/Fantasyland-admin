@@ -15,6 +15,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwind-scrollbar", 'tailwind-scrollbar-hide')({ nocompatible: true })],
+  plugins: [require("tailwind-scrollbar")({ nocompatible: true })],
 }
 export default config
